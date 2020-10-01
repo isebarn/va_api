@@ -39,9 +39,8 @@ gunicorn main:app --bind 0.0.0.0:1024 --timeout 30 --log-level info
 ```
 
 ### Current endpoints
-##### Returns first document from va_preference
+##### ```/domain_api/va/max_threshold/``` Returns first document from va_preference
 
-'''
-/domain_api/va/max_threshold/
-'''
+
+
 
