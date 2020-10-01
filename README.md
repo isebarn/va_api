@@ -9,7 +9,10 @@ virtualenv venv
 
 Add these environment variables to the file ```/venv/bin/activate```
 ```
-# not necesary when running gunicorn, only debug
+# FLASK_APP and FLASK_ENV not necesary when running gunicorn, only when running with flask
+export FLASK_APP=main.py
+export FLASK_ENV=development
+
 export DATABASE=<database connection string>
 export USERNAME=<username>
 export PASSWORD=<password>
@@ -30,7 +33,9 @@ pip3 install -r requirements.txt
 ### How to run
 
 ```
-gunicorn API:app --bind 0.0.0.0:1024 --timeout 30 --log-level info
+flask run
+# or
+gunicorn main:app --bind 0.0.0.0:1024 --timeout 30 --log-level info
 ```
 
 ### Current endpoints
