@@ -1,0 +1,5 @@
+.idea
+venv/*
+*sublime*
+*__pycache__/*
+*/__pycache__/*
