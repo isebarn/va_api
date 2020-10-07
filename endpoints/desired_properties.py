@@ -88,6 +88,7 @@ model = api.model('Model', {
   'UpdateExe': fields.Boolean(default=False),
   'inclusions': fields.String,
   'remote_path': fields.String,
+  'last_updated_time': fields.String(attribute='modified_on'),
   'AutomationConfig': fields.String(attribute='automation_config'),
 })
 
