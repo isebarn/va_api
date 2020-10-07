@@ -56,6 +56,8 @@ then = api.model('then', {
   'anonymize': fields.Boolean,
   'is_case_id': fields.Boolean,
   'w_path': fields.String,
+  'name': fields.String,
+  'propertyIDs': fields.String,
   'query': fields.List(fields.Nested(query))
 })
 
