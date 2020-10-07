@@ -1,8 +1,9 @@
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from endpoints import blueprint as api
+from endpoints import api
 
 app = Flask(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = False
-app.register_blueprint(api)
+
+api.init_app(app)
