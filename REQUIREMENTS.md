@@ -90,7 +90,9 @@
       "inclusions": "appsuitedashcom,yatracom",
       "last_updated_time": "25/09/2020 17:02:02",
       "AutomationConfig": "",
-      "domains": "[{'domain': 'appsuitedashcom', 'automation_enabled': 'true', 'capture_dom': 'true', 'data_field_groups': [{'id': 1, 'when': {'agent_type_pattern': '.*', 'control_id_pattern': '.*', 'event_path_pattern': '.*', 'title_pattern': '.*', 'url_pattern': '(.*)app.suitedash.com/invoices/update/(.*)(.*)'}, 'then': [{'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'invoiceNumber'}], 'name': '{10}invoiceNumber', 'propertyIDs': [30045]}, {'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'dueDate'}], 'name': '{10}MM/DD/YYYY', 'propertyIDs': [30045]}, {'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'invoiceTitle'}], 'name': '{10}invoiceTitle', 'propertyIDs': [30045]}]}, {'id': 2, 'when': {'agent_type_pattern': '.*', 'control_id_pattern': '.*', 'event_path_pattern': '.*', 'title_pattern': '.*', 'url_pattern': '(.*)app.suitedash.com/invoices/createInvoice/(.*)(.*)'}, 'then': [{'anonymize': 'false', 'is_case_id': 'false', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'paymentDetails'}], 'name': '{00}paymentDetails', 'propertyIDs': [30045]}]}]}]"
+      "domains": "[
+
+      {'domain': 'appsuitedashcom', 'automation_enabled': 'true', 'capture_dom': 'true', 'data_field_groups': [{'id': 1, 'when': {'agent_type_pattern': '.*', 'control_id_pattern': '.*', 'event_path_pattern': '.*', 'title_pattern': '.*', 'url_pattern': '(.*)app.suitedash.com/invoices/update/(.*)(.*)'}, 'then': [{'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'invoiceNumber'}], 'name': '{10}invoiceNumber', 'propertyIDs': [30045]}, {'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'dueDate'}], 'name': '{10}MM/DD/YYYY', 'propertyIDs': [30045]}, {'anonymize': 'false', 'is_case_id': 'true', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'invoiceTitle'}], 'name': '{10}invoiceTitle', 'propertyIDs': [30045]}]}, {'id': 2, 'when': {'agent_type_pattern': '.*', 'control_id_pattern': '.*', 'event_path_pattern': '.*', 'title_pattern': '.*', 'url_pattern': '(.*)app.suitedash.com/invoices/createInvoice/(.*)(.*)'}, 'then': [{'anonymize': 'false', 'is_case_id': 'false', 'wpath': '', 'query': [{'property_type': 30003, 'property_value': 50004}, {'property_type': 30011, 'property_value': 'paymentDetails'}], 'name': '{00}paymentDetails', 'propertyIDs': [30045]}]}]}]"
     }
 ``` 
 
@@ -111,6 +113,18 @@
 
 ``` javascript
   {
+      "": null,
+      "": null,
+      "": null,
+      "": null,
+      "": null,
+      "": null,
+      "": null,
+      "": null,
+      "userName": null,
+      "device": null
+    }
+
       "osVersion": null,
       "language": null,
       "cultureName": null,
@@ -121,13 +135,44 @@
       "fireFoxVersion": null,
       "userName": null,
       "device": null
-    }
 ```
 
 * Output is success and status code
 
 * update/insert in devices collection with data in request body with changes as per given schema
-  
-  
-  
-  
+
+    _id: ObjectId('5f722a742930714468ed8929'),
+    name: 'a',
+    unique_id: 'u168380',
+    os: {
+        version: '6.2.9200.0', osVersion
+        name: 'Microsoft Windows 10 Pro',
+        locale: {
+            geo_location: null, geoLocation
+            time_zone: 'IST',
+            day_light_saving_support: false
+        },
+        culture: {
+            name: 'en-US', cultureName
+            LCID: '1033', cultureLCID
+            language: 'English (United States)' language
+        },
+        browser: [
+            {
+                name: 'IE',
+                value: '9.11.17763.0' ieVersion
+            },
+            {
+                name: 'Chrome',
+                value: '84.0.4147.105' chromeVersion
+            },
+            {
+                name: 'Firefox',
+                value: 'Not Found' fireFoxVersion
+            }
+        ]
+    },
+    created_by: '',
+    created_on: '',
+    modified_by: '',
+    modified_on: ISODate('2020-07-20T06:08:50.876Z')

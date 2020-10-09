@@ -31,7 +31,7 @@ def va_desired_properties(device, user):
     lambda x: str(x['device_id']) == result['device_id'], participant['va_info']), {})}
 
 
-  # fetch a few parameters with default values
+  # Add participants and convert inclusions to a string
   result = { **result, **participant}
   result['inclusions'] = ','.join(result['inclusions'])
 
@@ -103,17 +103,3 @@ def va_desired_properties(device, user):
     result['domains'].append(data)
 
   return result
-
-
-if __name__ == '__main__':
-  pprint(va_desired_properties('b', 'BOMW0000029528'))
-
-
-'''
-instructions to fetch required data:
-how to get device_id ?
-
-there are 2 parameters in request .. device and user
-
-domains can be fetched by following instructions mentioned in va_api.md file already shared
-'''

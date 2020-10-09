@@ -25,8 +25,6 @@ def default_error_handler(error):
   '''Default error handler'''
   return error
 
-
-
 model = api.model('Model', {
   'initial_command': fields.String,
   'inclusions': fields.String(attribute='configs.inclusions'),

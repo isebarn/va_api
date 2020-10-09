@@ -94,7 +94,6 @@ model = api.model('Model', {
 
 @api.route("/")
 class DesiredPropertiesClass(Resource):
-
   @api.marshal_with(model)
   def get(self):
     args = parser.parse_args()
