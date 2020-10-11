@@ -5,30 +5,6 @@ from MongoQuery import va_desired_properties
 
 api = Namespace("desired_properties", description="Desired Properties")
 
-class QueryError(Exception):
-  def __init__(self, message):
-    self.response = { 'data': message }
-    self.code = 500
-    self.status = "failure"
-    self.message = ""
-
-error_fields = api.model('error', {
-  "response": fields.String,
-  "message": fields.String,
-  "status": fields.String,
-  "code": fields.Integer
-})
-
-@api.errorhandler(QueryError)
-@api.marshal_with(error_fields, code=400)
-@api.errorhandler
-def default_error_handler(error):
-  '''Default error handler'''
-  return error
-
-parser = reqparse.RequestParser()
-parser.add_argument('device', type=str, help='Device name')
-parser.add_argument('user', type=str, help='User name')
 
 sftp_config = api.model('sftp', {
   'username': fields.String,
@@ -92,15 +68,32 @@ model = api.model('Model', {
   'AutomationConfig': fields.String(attribute='automation_config'),
 })
 
+success = api.model('success', {
+  "code": fields.Integer,
+  "status": fields.String,
+  "data": fields.Nested(model),
+})
+
+
+parser = reqparse.RequestParser()
+parser.add_argument('device', type=str, help='Device name')
+parser.add_argument('user', type=str, help='User name')
+
 @api.route("/")
 class DesiredPropertiesClass(Resource):
-  @api.marshal_with(model)
+  @api.marshal_with(success)
   def get(self):
     args = parser.parse_args()
+
+    if args.device == None:
+      raise Exception("Device name missing required parameter")
+
+    if args.user == None:
+      raise Exception("User name missing required parameter")
 
     desired_properties = va_desired_properties(args.device, args.user)
 
     if desired_properties == None:
       raise QueryError("No result")
 
-    return desired_properties
+    return { 'code': 200, 'status': 'success', 'data': desired_properties}

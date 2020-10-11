@@ -31,9 +31,24 @@ system_info = api.model('system_info', {
   'device': fields.String(required=True)
 })
 
+def validate_post(payload):
+  required = [x[0] for x in system_info.items() if x[1].required]
+  missing_required = next(filter(lambda x: x not in payload, required), None)
+
+  # check for missing fields
+  if missing_required != None:
+    raise Exception("Required field missing: {}".format(missing_required))
+
+  if any([not isinstance(v, str) for k,v in payload.items()]):
+    raise Exception("All fields should be string values")
+
 @api.route("/")
 class SystemInfoClass(Resource):
-  @api.expect(system_info, validate=True)
+  @api.expect(system_info, validate=False)
   @api.marshal_with(success)
   def post(self):
+
+    # validation must be done manually, because otherwise we cannot wrap the error
+    validate_post(api.payload)
+
     return { 'code': 200, 'status': 'success', 'data': save_system_info(api.payload)}

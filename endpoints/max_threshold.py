@@ -1,29 +1,8 @@
 from flask_restx import Namespace, Resource, fields
 from flask import abort
-from MongoQuery import va_max_threshold
+import MongoQuery
 
 api = Namespace("max_threshold", description="Configuration")
-
-class QueryError(Exception):
-  def __init__(self, message):
-    self.response = { 'data': message }
-    self.code = 500
-    self.status = "failure"
-    self.message = ""
-
-error_fields = api.model('error', {
-  "response": fields.String,
-  "message": fields.String,
-  "status": fields.String,
-  "code": fields.Integer
-})
-
-@api.errorhandler(QueryError)
-@api.marshal_with(error_fields, code=400)
-@api.errorhandler
-def default_error_handler(error):
-  '''Default error handler'''
-  return error
 
 model = api.model('Model', {
   'initial_command': fields.String,
@@ -45,14 +24,19 @@ model = api.model('Model', {
   "Anonymize": fields.String(attribute='configs.anonymize')
 })
 
+success = api.model('success', {
+  "code": fields.Integer,
+  "status": fields.String,
+  "data": fields.Nested(model),
+})
+
 @api.route("/")
 class MaxThresholdClass(Resource):
-
-  @api.marshal_with(model, envelope='data')
+  @api.marshal_with(success)
   def get(self):
-    max_threshold = va_max_threshold()
-
+    max_threshold = MongoQuery.va_max_threshold()
+    print(max_threshold)
     if max_threshold == None:
-      raise QueryError("No result")
+      raise Exception("No result")
 
-    return max_threshold
+    return { 'code': 200, 'status': 'success', 'data': max_threshold}

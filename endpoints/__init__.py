@@ -17,4 +17,4 @@ wrap = api.model('wrap', {
 @api.marshal_with(wrap)
 @api.errorhandler(Exception)
 def default_error_handler(error):
-  return { 'code': 400, 'status': 'failure', 'message': str(error)}
+  return { 'code': 400, 'status': 'failure', 'message': str(error)}, 400

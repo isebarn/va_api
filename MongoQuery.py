@@ -18,11 +18,17 @@ def va_desired_properties(device, user):
   result['sftp_config'].pop('_id')
 
   # add device
-  result = {**result, **client().Users.devices.find_one({ 'name': device})}
+  device = client().Users.devices.find_one({ 'name': device})
+  if device == None:
+    raise Exception('Device not found')
+
+  result = {**result, **device}
   result['device_id'] = str(result['_id'])
 
   # fetch participant user
   participant = client().Users.participants.find_one({ 'name': user })
+  if participant == None:
+    raise Exception("Participant not found")
 
   # fetch from participant.va_info list, the item with
   # device_id that matches result['device_id']
