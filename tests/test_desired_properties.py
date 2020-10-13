@@ -1,6 +1,5 @@
 import json
 from pytest import mark, raises
-from MongoQuery import va_max_threshold
 
 '''
 missing username

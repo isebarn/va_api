@@ -1,10 +1,9 @@
 from flask_restx import Namespace, Resource, fields
 from flask import abort
 from flask_restx import reqparse
-from MongoQuery import va_desired_properties
+import queries.desired_properties
 
 api = Namespace("desired_properties", description="Desired Properties")
-
 
 sftp_config = api.model('sftp', {
   'username': fields.String,
@@ -50,7 +49,6 @@ domains = api.model('domains', {
   'data_field_groups': fields.List(fields.Nested(data_field_group))
 })
 
-
 model = api.model('Model', {
   'sftp_config': fields.Nested(sftp_config),
   'domains': fields.List(fields.Nested(domains)),
@@ -90,10 +88,9 @@ class DesiredPropertiesClass(Resource):
 
     if args.user == None:
       raise Exception("User name missing required parameter")
+    result = queries.desired_properties.desired_properties(args.device, args.user)
 
-    desired_properties = va_desired_properties(args.device, args.user)
-
-    if desired_properties == None:
+    if result == None:
       raise QueryError("No result")
 
-    return { 'code': 200, 'status': 'success', 'data': desired_properties}
+    return { 'code': 200, 'status': 'success', 'data': result}

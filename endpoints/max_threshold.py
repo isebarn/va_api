@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource, fields
 from flask import abort
-import MongoQuery
+import queries.max_threshold
 
 api = Namespace("max_threshold", description="Configuration")
 
@@ -34,7 +34,7 @@ success = api.model('success', {
 class MaxThresholdClass(Resource):
   @api.marshal_with(success)
   def get(self):
-    max_threshold = MongoQuery.va_max_threshold()
+    max_threshold = queries.max_threshold.max_threshold()
     print(max_threshold)
     if max_threshold == None:
       raise Exception("No result")

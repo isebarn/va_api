@@ -1,7 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask import abort
 from flask_restx import reqparse
-from MongoCommand import system_info as save_system_info
+from commands.system_info import system_info as save_system_info
 
 api = Namespace("system_info", description="System Info")
 

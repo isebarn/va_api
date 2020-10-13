@@ -1,15 +1,8 @@
-import os
-import pymongo
+from utils.DbConnection import client
 from bson.objectid import ObjectId
-from pprint import pprint
 
-def client():
-  return pymongo.MongoClient(os.environ.get("DATABASE").format(os.environ.get("USERNAME"), os.environ.get("PASSWORD")))
-
-def va_max_threshold():
-  return client().Users.va_preference.find_one({})
-
-def va_desired_properties(device, user):
+def desired_properties(device, user):
+  print(1)
   # Item that will be returned
   result = {}
 

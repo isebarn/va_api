@@ -1,6 +1,6 @@
 import json
 from pytest import mark, raises
-from MongoQuery import va_max_threshold
+import queries.max_threshold
 
 @mark.query_max_threshold_success
 def test_query_max_threshold_success(app, client):
@@ -32,7 +32,7 @@ def test_query_max_threshold_success(app, client):
 
 @mark.query_max_threshold_failure
 def test_query_max_threshold_failure(app, client, mocker):
-  mocker.patch('MongoQuery.va_max_threshold', return_value=None)
+  mocker.patch('queries.max_threshold.max_threshold', return_value=None)
   res = client.get('/max_threshold/')
   assert res.status_code == 400
   assert json.loads(res.data)['code'] == 400
