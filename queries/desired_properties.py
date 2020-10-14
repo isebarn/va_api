@@ -1,17 +1,15 @@
-from utils.DbConnection import client
+from utils.DbConnection import get_collection
 from bson.objectid import ObjectId
 
 def desired_properties(device, user):
-  print(1)
   # Item that will be returned
   result = {}
 
   # add sftp_config
-  result['sftp_config'] = client().General_Preferences.sftp_settings.find_one({})
-  result['sftp_config'].pop('_id')
+  result['sftp_config'] = get_collection('sftp_settings').find_one({})
 
   # add device
-  device = client().Users.devices.find_one({ 'name': device})
+  device = get_collection('devices').find_one({ 'name': device})
   if device == None:
     raise Exception('Device not found')
 
@@ -19,7 +17,7 @@ def desired_properties(device, user):
   result['device_id'] = str(result['_id'])
 
   # fetch participant user
-  participant = client().Users.participants.find_one({ 'name': user })
+  participant = get_collection('participants').find_one({ 'name': user })
   if participant == None:
     raise Exception("Participant not found")
 
@@ -35,7 +33,7 @@ def desired_properties(device, user):
   result['inclusions'] = ','.join(result['inclusions'])
 
   # Find the persona matching the participant and that users enabled applications
-  persona = client().Personas.personas.find_one({ '_id': ObjectId(participant['persona_id'])})
+  persona = get_collection('personas').find_one({ '_id': ObjectId(participant['persona_id'])})
   enabled_applications = list(filter(lambda x: x['collect_data'] == True, persona['applications']))
   result['domains'] = []
 
@@ -48,14 +46,14 @@ def desired_properties(device, user):
     data['capture_dom'] = enabled_application.get('capture_dom', True)
 
     # Get Applications.application to get domain
-    application = client().Applications.applications.find_one(
-      { 'type_id': enabled_application['application_id']})
+    application = get_collection('applications').find_one(
+    { 'application_name_hash': enabled_application['application_name_hash']})
     data['domain'] = application['name']
 
 
     # iterate over data attributes of application_widget
-    application_widgets = client().Personas.persona_application_widgets.find(
-      { "application_id": enabled_application['application_id']})
+    application_widgets = get_collection('persona_application_widgets').find(
+      { "application_name_hash": enabled_application['application_name_hash']})
     data['data_field_groups'] = []
     data_group_dict = {}
     for application_widget in application_widgets:
@@ -89,7 +87,7 @@ def desired_properties(device, user):
       for field_group in data_field_group['then']:
         field_group['name'] = "{{{}{}}}{}".format(
           1 if field_group['is_case_id'] else 0,
-          1 if field_group['anonymize'] else 0,
+          1 if field_group['anonymise'] else 0,
           field_group['name'])
 
         # add data_field_group to the dictionary that stores it temporarily

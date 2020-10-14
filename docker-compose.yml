@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  api:
+    image: api_image
+    container_name: api
+    restart: always
+    volumes:
+      - ./api/:/app
+    expose:
+      - "1024"
+    ports:
+      - 1024:1024

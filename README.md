@@ -1,8 +1,8 @@
 # `va_api backend`
 
-### How to setup
+# How to setup a *LOCAL* development environment
 
-Create a virtual environment
+### Create a virtual environment
 ```
 virtualenv venv
 ```
@@ -16,7 +16,6 @@ export FLASK_ENV=development
 export DATABASE=<database connection string>
 export USERNAME=<username>
 export PASSWORD=<password>
-export DB=<database name>
 ```
 
 Activate the virtual environment
@@ -38,9 +37,60 @@ flask run
 gunicorn main:app --bind 0.0.0.0:1024 --timeout 30 --log-level info
 ```
 
-### Current endpoints
-##### ```/domain_api/va/max_threshold/``` Returns first document from va_preference
+# How to run the api on docker
 
+### Quick docker installation (Linux)
+##### Install docker
+```
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
+sudo apt update
+sudo apt install docker-ce
+```
+##### Install docker-compose
+```
+# Install docker-compose (note that the version in the url may need to be updated)
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+### Initial setup
 
+##### Clone the repo into a folder called api
 
+```
+git clone <reponame> api
+```
 
+##### Modify the ```Dockerfile``` to your needs. 
+You might need to:
+- Change the port. Port is set to ```1024```, if you want another port, change it in the ```Dockerfile``` and ```docker-compose.yml```
+- Change the environment variables. You will find them in the ```Dockerfile```
+- If for some reason you did *NOT* clone the repo into a folder called ```api```, you must change the ```COPY``` command in the ```Dockerfile```.
+
+##### Build the image from Dockerfile
+```
+docker build -t api_image .
+```
+
+```It didn't work?```
+- run ```ls```, is there a ```Dockerfile``` in the result?
+- run ```ls```, is there a directory called ```api``` containing the code?
+
+##### Running the container
+```
+docker-compose up
+```
+
+##### Updating the container
+```Q: Did you install any new requirements? (i.e did requirements.txt change?)```
+```
+docker build -t api_image .
+```
+
+```Q: Did you update the code?```
+```
+docker-compose down
+git -C ./api pull
+docker-compose up
+```

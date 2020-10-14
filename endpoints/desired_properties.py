@@ -28,11 +28,11 @@ query = api.model('query', {
 })
 
 then = api.model('then', {
-  'anonymize': fields.Boolean,
+  'anonymise': fields.Boolean,
   'is_case_id': fields.Boolean,
   'w_path': fields.String,
   'name': fields.String,
-  'propertyIDs': fields.String,
+  'property_ids': fields.List(fields.String(lambda x: str(x))),
   'query': fields.List(fields.Nested(query))
 })
 

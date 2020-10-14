@@ -78,10 +78,9 @@ def test_post_system_info_success_insert(app, client):
   assert res.status_code == 200
   assert result['status'] == 'success'
 
-  assert result['data']['n'] == 1
-  assert result['data']['nModified'] == 0
-  assert result['data']['ok'] == 1
-  assert result['data']['updatedExisting'] == False
+  assert result['data']['modified_count'] == 0
+  assert result['data']['matched_count'] == 0
+  assert result['data']['upserted_id'] != None
 
 @mark.post_system_info_success
 def test_post_system_info_success_update(app, client):
@@ -100,10 +99,9 @@ def test_post_system_info_success_update(app, client):
   assert result['code'] == 200
   assert result['status'] == 'success'
 
-  assert result['data']['n'] == 1
-  assert result['data']['nModified'] == 0
-  assert result['data']['ok'] == 1
-  assert result['data']['updatedExisting'] == True
+  assert result['data']['modified_count'] == 0
+  assert result['data']['matched_count'] == 1
+  assert result['data']['upserted_id'] == None
 
   # Now the real test begins
   # Get dataset 2 and save
@@ -115,7 +113,6 @@ def test_post_system_info_success_update(app, client):
   assert result['code'] == 200
   assert result['status'] == 'success'
 
-  assert result['data']['n'] == 1
-  assert result['data']['nModified'] == 1
-  assert result['data']['ok'] == 1
-  assert result['data']['updatedExisting'] == True
+  assert result['data']['modified_count'] == 1
+  assert result['data']['matched_count'] == 1
+  assert result['data']['upserted_id'] == None

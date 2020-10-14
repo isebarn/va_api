@@ -32,7 +32,7 @@ def test_query_max_threshold_success(app, client):
 
 @mark.query_max_threshold_failure
 def test_query_max_threshold_failure(app, client, mocker):
-  mocker.patch('queries.max_threshold.max_threshold', return_value=None)
+  mocker.patch('queries.max_threshold.get', return_value=None)
   res = client.get('/max_threshold/')
   assert res.status_code == 400
   assert json.loads(res.data)['code'] == 400

@@ -9,7 +9,7 @@ unknown device empty result set
 '''
 @mark.query_desired_properties_success
 def test_query_desired_properties(app, client):
-  res = client.get('/desired_properties/?user=BOMW0000029528&device=a')
+  res = client.get('/desired_properties/?user=BO0MW0000029528&device=a')
   assert res.status_code == 200
 
   result = json.loads(res.get_data())
@@ -31,7 +31,7 @@ def test_query_desired_properties_device_not_found(app, client):
 
 @mark.query_desired_properties_failure
 def test_query_desired_properties_participant_not_found(app, client):
-  res = client.get('/desired_properties/?user=BO0MW0000029528&device=a')
+  res = client.get('/desired_properties/?user=BO0MW000002952&device=a')
   assert res.status_code == 400
 
   result = json.loads(res.get_data())

@@ -1,15 +1,14 @@
 from flask_restx import Namespace, Resource, fields
 from flask import abort
 from flask_restx import reqparse
-from commands.system_info import system_info as save_system_info
+from commands.system_info import post
 
 api = Namespace("system_info", description="System Info")
 
 success_wrap = api.model('success_data', {
-  'n': fields.Integer,
-  'nModified': fields.Integer,
-  'ok': fields.Integer,
-  'updatedExisting': fields.Boolean
+  'modified_count': fields.Integer,
+  'matched_count': fields.Integer,
+  'upserted_id': fields.String,
 })
 
 success = api.model('success', {
@@ -51,4 +50,4 @@ class SystemInfoClass(Resource):
     # validation must be done manually, because otherwise we cannot wrap the error
     validate_post(api.payload)
 
-    return { 'code': 200, 'status': 'success', 'data': save_system_info(api.payload)}
+    return { 'code': 200, 'status': 'success', 'data': post(api.payload)}

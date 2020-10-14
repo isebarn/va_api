@@ -1,4 +1,4 @@
-from utils.DbConnection import client
+from utils.DbConnection import get_collection
 
-def max_threshold():
-  return client().Users.va_preference.find_one({})
+def get():
+  return get_collection('va_preference').find_one({})

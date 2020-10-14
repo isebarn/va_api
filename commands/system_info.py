@@ -1,7 +1,7 @@
-from utils.DbConnection import client
+from utils.DbConnection import get_collection
 
-def system_info(system_info):
-  upsert_info = client()['Users']['devices'].update({'name': system_info['device']},
+def post(system_info):
+  upsert_info = get_collection('devices').update_one({'name': system_info['device']},
     {'$set':
       {
         'os.version': system_info.get('osVersion'),
@@ -16,7 +16,6 @@ def system_info(system_info):
         ]
       }
     },
-    upsert=True,
-    multi=False)
+    upsert=True)
 
   return upsert_info

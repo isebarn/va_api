@@ -34,8 +34,7 @@ success = api.model('success', {
 class MaxThresholdClass(Resource):
   @api.marshal_with(success)
   def get(self):
-    max_threshold = queries.max_threshold.max_threshold()
-    print(max_threshold)
+    max_threshold = queries.max_threshold.get()
     if max_threshold == None:
       raise Exception("No result")
 
